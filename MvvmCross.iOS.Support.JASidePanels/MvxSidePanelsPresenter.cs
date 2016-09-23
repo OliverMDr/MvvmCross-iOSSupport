@@ -43,6 +43,16 @@
 
         #endregion Private fields
 
+        /// <summary>
+        /// MultiPanelController Property
+        /// </summary>
+        public MvxMultiPanelController MultiPanelController {
+          get
+          {
+            return this._multiPanelController;
+          }
+        }
+
         #region ctors
 
         /// <summary>
@@ -291,6 +301,16 @@
             }
             else
             {
+                // Check if the current view controller and the viewcontroller to show are the same. If this is the case just show the already loaded ViewController of Center Panel
+                string currentViewController = this._multiPanelController.CenterPanel.ChildViewControllers[0].GetType().Name;
+                string newViewController = viewController.GetType().Name;
+
+                if (currentViewController == newViewController)
+                {
+                  this._multiPanelController.ShowCenterPanelAnimated(true);
+                  return;
+                }
+
                 // here we need to get the Presentation Panel attribute details
                 var panelAttribute = viewController.GetType().GetCustomAttributes(typeof(MvxPanelPresentationAttribute), true).FirstOrDefault() as MvxPanelPresentationAttribute;
                 if (panelAttribute != null)
