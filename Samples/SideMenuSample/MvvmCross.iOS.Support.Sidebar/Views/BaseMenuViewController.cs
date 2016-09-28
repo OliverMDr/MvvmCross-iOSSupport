@@ -20,6 +20,5 @@ namespace MvvmCross.iOS.Support.Sidebar.Views
         {
             get { return UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone; }
         }
-
     }
 }

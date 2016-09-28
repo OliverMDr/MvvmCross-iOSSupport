@@ -27,6 +27,8 @@ namespace MvvmCross.iOS.Support.XamarinSidebar.Hints
 
             navigationController.ViewControllers = new[] { ViewController };
 
+            this.SidebarPanelController.LeftSidebarController?.CloseMenu(true);
+
             return true;
         }
     }
