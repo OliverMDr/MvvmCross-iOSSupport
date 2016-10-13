@@ -47,6 +47,11 @@
         protected UIScrollView ScrollToCenterOnKeyboardShown;
 
         /// <summary>
+        /// 
+        /// </summary>
+        private UITapGestureRecognizer tap;
+
+        /// <summary>
 		/// Initialises the keyboard handling.  The view must also contain a UIScrollView for this to work.  You must also override HandlesKeyboardNotifications() and return true from that method.
 		/// </summary>
 		/// <param name="enableAutoDismiss">If set to <c>true</c> enable auto dismiss.</param>
@@ -184,7 +189,7 @@
         protected void DismissKeyboardOnBackgroundTap()
         {
             // Add gesture recognizer to hide keyboard
-            var tap = new UITapGestureRecognizer { CancelsTouchesInView = false };
+            tap = new UITapGestureRecognizer { CancelsTouchesInView = false };
             tap.AddTarget(() => View.EndEditing(true));
             tap.ShouldReceiveTouch = (recognizer, touch) => !(touch.View is UIControl || touch.View.FindSuperviewOfType(View, typeof(UITableViewCell)) != null);
             View.AddGestureRecognizer(tap);
@@ -211,5 +216,18 @@
 			}
 			return false; // We do not want UITextField to insert line-breaks.
 		}
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="animated"></param>
+        public override void ViewWillDisappear(bool animated)
+        {
+            base.ViewWillDisappear(animated);
+
+            this.UnregisterForKeyboardNotifications();
+
+            this.View.RemoveGestureRecognizer(this.tap);
+        }
     }
 }
